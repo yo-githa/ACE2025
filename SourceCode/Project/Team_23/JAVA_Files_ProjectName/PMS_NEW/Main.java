@@ -9,7 +9,6 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd'T'HH:mm");
 
-        // Initialize RequestUtility
         RequestUtility requestUtility = new RequestUtility();
 
         while (true) {
@@ -123,7 +122,6 @@ public class Main {
         }
     }
 
-    // Method to handle repeated user input
     private static String[] getUserDetails(Scanner scanner, int userType) {
         System.out.println((userType == 1 ? "Admin" : userType == 2 ? "Vehicle Owner" : "Parking Lot Manager") + " Login:");
         return new String[]{prompt(scanner, "Name: "), prompt(scanner, "Contact: "), String.valueOf(promptInt(scanner, "ID: "))};
