@@ -6,7 +6,6 @@ public class VehicleOwner extends User {
     private String vehicleType;
     private List<ParkingRecord> parkingHistory;
 
-    // Constructor
     public VehicleOwner(int userID, String name, String contact, int vehicleOwnerID, String vehicleType) {
         super(userID, name, contact);
         this.vehicleOwnerID = vehicleOwnerID;
@@ -14,7 +13,6 @@ public class VehicleOwner extends User {
         this.parkingHistory = new ArrayList<>();
     }
 
-    // Getters and Setters
     public int getVehicleOwnerID() {
         return vehicleOwnerID;
     }
