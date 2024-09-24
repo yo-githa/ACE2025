@@ -6,14 +6,12 @@ public class ParkingLotManager extends User {
     private LocalDateTime entryTime;
     private LocalDateTime exitTime;
 
-    // Constructor
     public ParkingLotManager(int userID, String name, String contact, int managerID, int parkingLotID) {
         super(userID, name, contact);
         this.managerID = managerID;
         this.parkingLotID = parkingLotID;
     }
 
-    // Getters and Setters
     public int getManagerID() {
         return managerID;
     }
