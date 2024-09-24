@@ -4,12 +4,10 @@ import java.util.List;
 public class RequestUtility {
     private List<Request> requests;
 
-    // Constructor
     public RequestUtility() {
         this.requests = new ArrayList<>();
     }
 
-    // Add a new request
     public void makeRequest(Request request) throws InvalidRequestStatusException {
         if (!request.getRequestStatus().equals("Open") && !request.getRequestStatus().equals("Close")) {
             throw new InvalidRequestStatusException("Invalid status! Must be 'Open' or 'Close'.");
@@ -18,7 +16,6 @@ public class RequestUtility {
         System.out.println("Request added: " + request.getDescription());
     }
 
-    // Update the status and resolution of a request
     public void updateRequestStatus(int requestID, String resolution, String status) throws InvalidRequestStatusException, RequestNotFoundException {
         Request request = findRequestByID(requestID);
         if (request == null) {
@@ -32,7 +29,6 @@ public class RequestUtility {
         System.out.println("Request status updated: " + request.getDescription() + " Status: " + status);
     }
 
-    // Get all open requests
     public List<Request> getOpenRequests() {
         List<Request> openRequests = new ArrayList<>();
         for (Request req : requests) {
@@ -43,7 +39,6 @@ public class RequestUtility {
         return openRequests;
     }
 
-    // Helper method to find request by ID
     private Request findRequestByID(int requestID) {
         for (Request req : requests) {
             if (req.getRequestID() == requestID) {
