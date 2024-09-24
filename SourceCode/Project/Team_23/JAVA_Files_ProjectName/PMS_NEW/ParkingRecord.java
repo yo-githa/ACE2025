@@ -6,7 +6,7 @@ public class ParkingRecord {
     private LocalDateTime exitTime;
     private double parkingFee;
 
-    // Constructor
+    
     public ParkingRecord(String vehicleType, LocalDateTime entryTime, LocalDateTime exitTime, double parkingFee) {
         this.vehicleType = vehicleType;
         this.entryTime = entryTime;
@@ -14,7 +14,6 @@ public class ParkingRecord {
         this.parkingFee = parkingFee;
     }
 
-    // Getters and Setters
     public String getVehicleType() {
         return vehicleType;
     }
