@@ -3,14 +3,13 @@ public abstract class User {
     private String name;
     private String contact;
 
-    // Constructor
+    
     public User(int userID, String name, String contact) {
         this.userID = userID;
         this.name = name;
         this.contact = contact;
     }
 
-    // Getters and Setters
     public int getUserID() {
         return userID;
     }
