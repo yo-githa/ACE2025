@@ -8,7 +8,7 @@ public class Request {
     private String resolution;
     private String requestStatus; // Values: "Open" or "Close"
 
-    // Constructor
+    
     public Request(int requestID, String requesterName, LocalDateTime requestDate, String description) {
         this.requestID = requestID;
         this.requesterName = requesterName;
@@ -17,7 +17,6 @@ public class Request {
         this.requestStatus = "Open";
     }
 
-    // Getters and Setters
     public int getRequestID() {
         return requestID;
     }
