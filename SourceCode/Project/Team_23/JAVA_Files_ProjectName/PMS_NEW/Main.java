@@ -14,34 +14,38 @@ public class Main {
         while (true) {
             System.out.println("Enter a number:\n1. Admin\n2. Vehicle Owner\n3. Parking Lot Manager\n4. Submit a Request\n5. Update Request Status\n6. View Open Requests\n7. Exit");
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine();
 
-            switch (choice) {
-                case 1: // Admin Case
-                case 2: // Vehicle Owner Case
-                case 3: // Parking Lot Manager Case
-                    handleUserActions(choice, scanner, formatter);
-                    break;
-                case 4:
-                    submitRequest(scanner, requestUtility);
-                    break;
-                case 5:
-                    updateRequestStatus(scanner, requestUtility);
-                    break;
-                case 6:
-                    viewOpenRequests(requestUtility);
-                    break;
-                case 7:
-                    System.out.println("Exiting the system...");
-                    scanner.close();
-                    return;
-                default:
-                    System.out.println("Invalid choice! Please enter a valid number.");
+            try {
+                switch (choice) {
+                    case 1: // Admin Case
+                    case 2: // Vehicle Owner Case
+                    case 3: // Parking Lot Manager Case
+                        handleUserActions(choice, scanner, formatter);
+                        break;
+                    case 4:
+                        submitRequest(scanner, requestUtility);
+                        break;
+                    case 5:
+                        updateRequestStatus(scanner, requestUtility);
+                        break;
+                    case 6:
+                        viewOpenRequests(requestUtility);
+                        break;
+                    case 7:
+                        System.out.println("Exiting the system...");
+                        scanner.close();
+                        return;
+                    default:
+                        throw new IllegalArgumentException("Invalid choice! Please enter a valid number.");
+                }
+            } catch (Exception e) {
+                System.out.println("Error: " + e.getMessage());
             }
         }
     }
 
-    private static void handleUserActions(int userType, Scanner scanner, DateTimeFormatter formatter) {
+    private static void handleUserActions(int userType, Scanner scanner, DateTimeFormatter formatter) throws Exception {
         String[] userDetails = getUserDetails(scanner, userType);
         String name = userDetails[0];
         String contact = userDetails[1];
@@ -58,7 +62,7 @@ public class Main {
         }
     }
 
-    private static void handleVehicleOwnerActions(Scanner scanner, String ownerName, String ownerContact, int ownerId) {
+    private static void handleVehicleOwnerActions(Scanner scanner, String ownerName, String ownerContact, int ownerId) throws Exception {
         System.out.print("Vehicle Type: ");
         String vehicleType = scanner.nextLine();
 
@@ -76,7 +80,7 @@ public class Main {
         vehicleOwner.logout();
     }
 
-    private static void handleParkingManagerActions(Scanner scanner, String managerName, String managerContact, int managerId, DateTimeFormatter formatter) {
+    private static void handleParkingManagerActions(Scanner scanner, String managerName, String managerContact, int managerId, DateTimeFormatter formatter) throws Exception {
         ParkingLotManager manager = new ParkingLotManager(managerId, managerName, managerContact, managerId, managerId);
         manager.login();
         manager.monitorParkingSlots();
@@ -92,24 +96,16 @@ public class Main {
         manager.logout();
     }
 
-    private static void submitRequest(Scanner scanner, RequestUtility requestUtility) {
+    private static void submitRequest(Scanner scanner, RequestUtility requestUtility) throws InvalidRequestStatusException {
         System.out.println("Submit a Request:");
         Request newRequest = new Request(promptInt(scanner, "Request ID: "), prompt(scanner, "Requester Name: "), LocalDateTime.now(), prompt(scanner, "Description: "));
 
-        try {
-            requestUtility.makeRequest(newRequest);
-        } catch (InvalidRequestStatusException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
+        requestUtility.makeRequest(newRequest);
     }
 
-    private static void updateRequestStatus(Scanner scanner, RequestUtility requestUtility) {
+    private static void updateRequestStatus(Scanner scanner, RequestUtility requestUtility) throws InvalidRequestStatusException, RequestNotFoundException {
         System.out.println("Update Request Status:");
-        try {
-            requestUtility.updateRequestStatus(promptInt(scanner, "Request ID: "), prompt(scanner, "Resolution: "), prompt(scanner, "Status (Open/Close): "));
-        } catch (InvalidRequestStatusException | RequestNotFoundException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
+        requestUtility.updateRequestStatus(promptInt(scanner, "Request ID: "), prompt(scanner, "Resolution: "), prompt(scanner, "Status (Open/Close): "));
     }
 
     private static void viewOpenRequests(RequestUtility requestUtility) {
@@ -122,7 +118,7 @@ public class Main {
         }
     }
 
-    private static String[] getUserDetails(Scanner scanner, int userType) {
+    private static String[] getUserDetails(Scanner scanner, int userType) throws Exception {
         System.out.println((userType == 1 ? "Admin" : userType == 2 ? "Vehicle Owner" : "Parking Lot Manager") + " Login:");
         return new String[]{prompt(scanner, "Name: "), prompt(scanner, "Contact: "), String.valueOf(promptInt(scanner, "ID: "))};
     }
